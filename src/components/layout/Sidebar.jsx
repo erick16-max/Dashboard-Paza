@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { orderLinks } from '../data/links'
+import AppContext from '../../context/Context';
+import { useContext } from 'react';
 
 
 const Sidebar = () => {
@@ -9,12 +11,15 @@ const Sidebar = () => {
   const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md  dark:text--700 dark:hover:text-black hover:bg-light-gray m-2';
 
   // const [adminLinks, setAdminLinks] = useState([])
+  const {user} = useContext(AppContext)
+  console.log(user.admin)
+  const isAdmin = user.admin ? 'admin' : 'user'
 
-  const user = {
-    name: 'Amekwi',  
-    role: 'admin',
-  }
-  const userLinks = orderLinks.filter(orderLink => orderLink.role === 'user');
+  // const userIsAdmin = {
+  //   name: 'Amekwi',  
+  //   role: isAdmin,
+  // }
+  const userLinks = orderLinks.filter(orderLink => orderLink.role === isAdmin);
   console.log(userLinks)
 
 

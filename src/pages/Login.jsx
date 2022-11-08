@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import png from '../png.png'
 import axios from "axios";
+import { useContext } from 'react';
+import AppContext from '../context/Context';
 
 
 
@@ -9,6 +11,8 @@ const Login = () => {
     const router = useNavigate();
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
+
+    const {loginUser, isLoading} = useContext(AppContext)
     
     
 
@@ -41,10 +45,10 @@ const Login = () => {
             </div>
             <div className='h-5/6 w-1/2 bg-[#020922] flex flex-col items-center justify-center'>
                 <h1 className='text-3xl text-white font-bold mb-4'>Login</h1>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={loginUser}>
                 <div className="relative mb-4">
                 <input 
-                onChange={event => setUserName(event.target.value)}
+                name='username'
                 placeholder='Username'
                 type='text'
                 required
@@ -54,14 +58,13 @@ const Login = () => {
                     text-black
                     pl-9 pr-4 py-2
                     w-full
-                    rounded-full
                     transition 
                     focus:ring-2 
                     focus:ring-blue-300' />
             </div>
             <div className="relative mb-4">
                 <input 
-                onChange={event => setPassword(event.target.value)}
+                 name='password'
                 placeholder='Password'
                 type='Password'
                 required
@@ -71,14 +74,23 @@ const Login = () => {
                     text-black
                     pl-9 pr-4 py-2
                     w-full
-                    rounded-full
                     transition 
                     focus:ring-2 
                     focus:ring-blue-300' />
                     </div>
-                    <button className='w-1/2 bg-blue-400 pt-2 pb-2 rounded-full text-1xl text-white'>
-                 Login
-            </button>
+                    {
+                      !isLoading ?
+                                <button type='submit' className='bg-blue-400 pt-2 pb-2 w-full text-1xl text-white'>
+                                    Login
+                                </button>
+                                :
+                                <button type='submit' className='w-full bg-gray-400 pt-2 b-2  text-1xl text-white' disabled>
+                                    <div class="flex  justify-center items-center">
+                                    <div class="spinner-border animate-spin inline-block w-6 h-6 border-4 rounded-full mb-1" role="status">
+                                    </div>
+                                    </div>
+                                </button>
+                    }
                     </form>
                     </div>
                   

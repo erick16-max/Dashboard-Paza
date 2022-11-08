@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import AppContext from '../context/Context';
+import { useContext } from 'react';
 
 export default function SignUp() {
     const router = useNavigate();
@@ -13,6 +15,9 @@ export default function SignUp() {
     const [county, setCounty] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+
+    const {registerUser} = useContext(AppContext)
+    
 
     const clickSubmit = (e) => {
         e.preventDefault();
@@ -92,7 +97,7 @@ export default function SignUp() {
                             Let's get you all set up so you can verify your
                             personal account and begin setting up your profile.
                         </p>
-
+                        <form onSubmit={registerUser}>
                         <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
                             <div>
                                 <label className="block mb-2 text-sm text-gray-600">
@@ -102,10 +107,7 @@ export default function SignUp() {
                                     type="text"
                                     placeholder="John"
                                     className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                                    value={firstname}
-                                    onChange={(e) =>
-                                        setFirstName(e.target.value)
-                                    }
+                                    name='firstname'
                                 />
                             </div>
 
@@ -117,27 +119,19 @@ export default function SignUp() {
                                     type="text"
                                     placeholder="Snow"
                                     className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                                    value={lastname}
-                                    onChange={(e) =>
-                                        setLastName(e.target.value)
-                                    }
+                                    name='lastname'
                                 />
                             </div>
 
                             <div>
                                 <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
-                                    Neighborhood Association
+                                    Email
                                 </label>
                                 <input
-                                    type="text"
-                                    placeholder="Neighborhood Association"
+                                    type="email"
+                                    placeholder="johnsnow@domain.com"
                                     className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                                    value={neighborhoodAssociation}
-                                    onChange={(e) =>
-                                        setNeighbourhoodAssociation(
-                                            e.target.value
-                                        )
-                                    }
+                                    name="email"
                                 />
                             </div>
 
@@ -148,10 +142,18 @@ export default function SignUp() {
                                 <input
                                     placeholder="JohnSnow"
                                     className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                                    value={username}
-                                    onChange={(e) =>
-                                        setUserName(e.target.value)
-                                    }
+                                    name="username"
+                                />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
+                                    Neighborhood Association
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="Neighborhood Association"
+                                    className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                                    name="association"
                                 />
                             </div>
 
@@ -162,8 +164,7 @@ export default function SignUp() {
                                 <input
                                     placeholder="Enter county name"
                                     className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                                    value={county}
-                                    onChange={(e) => setCounty(e.target.value)}
+                                    name="county"
                                 />
                             </div>
                             <div>
@@ -174,10 +175,7 @@ export default function SignUp() {
                                     type="password"
                                     placeholder="Enter your password"
                                     className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                                    value={password}
-                                    onChange={(e) =>
-                                        setPassword(e.target.value)
-                                    }
+                                    name="password1"
                                 />
                             </div>
 
@@ -189,17 +187,14 @@ export default function SignUp() {
                                     type="password"
                                     placeholder="Enter your password"
                                     className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                                    value={confirmPassword}
-                                    onChange={(e) =>
-                                        setConfirmPassword(e.target.value)
-                                    }
+                                    name="password2"
                                 />
                             </div>
                         </div>
                         <button
                             className="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-teal-500 rounded-md hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50 mt-3"
                             type="submit"
-                            onClick={clickSubmit}
+                            
                         >
                             <span>Sign Up </span>
 
@@ -216,6 +211,7 @@ export default function SignUp() {
                                 />
                             </svg>
                         </button>
+                        </form>
                     </div>
                 </div>
             </div>
